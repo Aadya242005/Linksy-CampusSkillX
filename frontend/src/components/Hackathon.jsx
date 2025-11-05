@@ -1,5 +1,5 @@
 import React from "react";
-import bgImage from "../assets/upload7.svg"; // Light, shadowy background for section
+import bgImage from "../assets/upload7.svg"; // Subtle tech pattern
 
 const hackathons = [
   {
@@ -11,6 +11,7 @@ const hackathons = [
     daysLeft: 12,
     image:
       "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=400&q=80",
+    registerLink: "https://googlechromeai2025.devpost.com/register",
   },
   {
     name: "AWS AI Agent Global Hackathon",
@@ -21,6 +22,7 @@ const hackathons = [
     daysLeft: 28,
     image:
       "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=400&q=80",
+    registerLink: "https://aws-agent-hackathon.devpost.com/register",
   },
   {
     name: "Baseline Tooling Hackathon",
@@ -31,6 +33,7 @@ const hackathons = [
     daysLeft: 60,
     image:
       "https://images.unsplash.com/photo-1517433456452-f9633a875f6f?auto=format&fit=crop&w=400&q=80",
+    registerLink: "https://baseline.devpost.com/register",
   },
   {
     name: "Open Source Sprint 2025",
@@ -41,6 +44,7 @@ const hackathons = [
     daysLeft: 90,
     image:
       "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=400&q=80",
+    registerLink: "https://osd2025.sched.com/register",
   },
 ];
 
@@ -59,7 +63,7 @@ const topThemes = [
 const HackathonsWithThemes = () => {
   return (
     <section
-      className="relative py-20 px-6 bg-white text-gray-900"
+      className="relative py-20 px-6 text-gray-100 bg-[#0F172A]"
       style={{
         backgroundImage: `url(${bgImage})`,
         backgroundRepeat: "no-repeat",
@@ -67,21 +71,23 @@ const HackathonsWithThemes = () => {
         backgroundPosition: "center",
       }}
     >
-      {/* Soft white overlay */}
-      <div className="absolute inset-0 bg-white/80 pointer-events-none"></div>
+      {/* Subtle gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0F172A]/90 via-[#1E293B]/90 to-[#0F172A]/95 pointer-events-none"></div>
 
       <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
-        {/* Left - Hackathons List */}
+        {/* Left Section - Hackathons */}
         <div>
-          <h2 className="text-3xl font-bold mb-6">Hackathons for you</h2>
+          <h2 className="text-3xl font-bold mb-8 text-skillx-primary">
+            Hackathons for You
+          </h2>
 
           <div className="space-y-6">
             {hackathons.map((hack, idx) => (
               <div
                 key={idx}
-                className="flex border border-gray-300 rounded-lg shadow-md bg-white hover:shadow-lg transition p-4"
+                className="flex bg-[#1E293B]/80 border border-[#3B82F6]/20 rounded-xl shadow-md hover:shadow-[0_0_15px_#22D3EE55] transition p-4 backdrop-blur-sm"
               >
-                <div className="w-28 h-28 flex-shrink-0 rounded-lg overflow-hidden border border-gray-200">
+                <div className="w-28 h-28 flex-shrink-0 rounded-lg overflow-hidden border border-[#3B82F6]/30">
                   <img
                     src={hack.image}
                     alt={hack.name}
@@ -90,17 +96,17 @@ const HackathonsWithThemes = () => {
                 </div>
                 <div className="ml-4 flex flex-col justify-between">
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900">
+                    <h3 className="text-lg font-semibold text-white">
                       {hack.name}
                     </h3>
-                    <div className="flex items-center space-x-3 text-sm text-gray-600 mt-2">
-                      <span className="bg-green-100 text-green-700 rounded-full px-2 py-0.5">
+                    <div className="flex items-center space-x-3 text-sm text-gray-400 mt-2">
+                      <span className="bg-[#10B981]/20 text-[#10B981] rounded-full px-2 py-0.5 font-medium">
                         {hack.daysLeft} days left
                       </span>
                       <span className="flex items-center gap-1">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          className="h-4 w-4 text-gray-500"
+                          className="h-4 w-4 text-skillx-accent"
                           fill="none"
                           viewBox="0 0 24 24"
                           stroke="currentColor"
@@ -118,29 +124,40 @@ const HackathonsWithThemes = () => {
                   </div>
 
                   <div className="flex flex-wrap gap-3 mt-4 text-sm">
-                    <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full font-medium">
+                    <span className="px-3 py-1 bg-[#FBBF24]/20 text-[#FBBF24] rounded-full font-medium">
                       {hack.prize} in prizes
                     </span>
-                    <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full font-medium">
+                    <span className="px-3 py-1 bg-[#3B82F6]/20 text-[#3B82F6] rounded-full font-medium">
                       {hack.participants.toLocaleString()} participants
                     </span>
                   </div>
+
+                  <a
+                    href={hack.registerLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-4 inline-block text-sm text-[#3B82F6] font-semibold hover:underline"
+                  >
+                    Register Now
+                  </a>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Right - Top Hackathon Themes */}
+        {/* Right Section - Top Themes */}
         <div>
-          <h2 className="text-3xl font-bold mb-6">Top hackathon themes</h2>
+          <h2 className="text-3xl font-bold mb-8 text-skillx-primary">
+            Top Hackathon Themes
+          </h2>
 
-          <table className="w-full text-left border-collapse">
+          <table className="w-full text-left border-collapse text-gray-200">
             <thead>
-              <tr className="border-b border-gray-300">
-                <th className="pb-2 font-semibold">Theme</th>
-                <th className="pb-2 font-semibold">Hackathons</th>
-                <th className="pb-2 font-semibold">Total prizes</th>
+              <tr className="border-b border-[#3B82F6]/30">
+                <th className="pb-3 font-semibold">Theme</th>
+                <th className="pb-3 font-semibold">Hackathons</th>
+                <th className="pb-3 font-semibold">Total Prizes</th>
                 <th></th>
               </tr>
             </thead>
@@ -148,16 +165,16 @@ const HackathonsWithThemes = () => {
               {topThemes.map((theme, idx) => (
                 <tr
                   key={idx}
-                  className={`border-b border-gray-200 hover:bg-gray-100 transition cursor-pointer`}
+                  className="border-b border-gray-700 hover:bg-[#1E293B]/70 transition cursor-pointer"
                 >
-                  <td className="py-2">
-                    <span className="bg-blue-100 text-blue-700 rounded px-2 py-0.5 text-sm">
+                  <td className="py-3">
+                    <span className="bg-[#22D3EE]/20 text-[#22D3EE] rounded px-2 py-0.5 text-sm">
                       {theme.theme}
                     </span>
                   </td>
-                  <td className="py-2">{theme.hackathons}</td>
-                  <td className="py-2">{theme.totalPrizes}</td>
-                  <td className="py-2 text-blue-600 font-bold text-lg">→</td>
+                  <td className="py-3">{theme.hackathons}</td>
+                  <td className="py-3">{theme.totalPrizes}</td>
+                  <td className="py-3 text-[#3B82F6] font-bold text-lg">→</td>
                 </tr>
               ))}
             </tbody>

@@ -1,137 +1,116 @@
-import React from "react";
-import bgImage from "../assets/upload8.svg"; // make sure this path is correct
+import React, { useEffect, useState } from "react";
+import bgImage from "../assets/upload8.svg";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function AlumniSection() {
-  const alumniData = [
-    {
-      _id: 1,
-      name: "Aarav Sharma",
-      role: "Software Engineer",
-      company: "Google",
-      batch: "2020",
-      image: "https://randomuser.me/api/portraits/men/32.jpg",
-      linkedin: "https://linkedin.com/in/aaravsharma",
-    },
-    {
-      _id: 2,
-      name: "Riya Verma",
-      role: "Data Scientist",
-      company: "Microsoft",
-      batch: "2019",
-      image: "https://randomuser.me/api/portraits/women/44.jpg",
-      linkedin: "https://linkedin.com/in/riyaverma",
-    },
-    {
-      _id: 3,
-      name: "Kabir Singh",
-      role: "Product Manager",
-      company: "Amazon",
-      batch: "2018",
-      image: "https://randomuser.me/api/portraits/men/75.jpg",
-      linkedin: "https://linkedin.com/in/kabirsingh",
-    },
-    {
-      _id: 4,
-      name: "Neha Gupta",
-      role: "UX Designer",
-      company: "Adobe",
-      batch: "2021",
-      image: "https://randomuser.me/api/portraits/women/68.jpg",
-      linkedin: "https://linkedin.com/in/nehagupta",
-    },
-    {
-      _id: 5,
-      name: "Arjun Mehta",
-      role: "Cloud Engineer",
-      company: "IBM",
-      batch: "2017",
-      image: "https://randomuser.me/api/portraits/men/12.jpg",
-      linkedin: "https://linkedin.com/in/arjunmehta",
-    },
-    {
-      _id: 6,
-      name: "Simran Kaur",
-      role: "AI Researcher",
-      company: "OpenAI",
-      batch: "2022",
-      image: "https://randomuser.me/api/portraits/women/19.jpg",
-      linkedin: "https://linkedin.com/in/simrankaur",
-    },
-    {
-      _id: 7,
-      name: "Dev Patel",
-      role: "Cybersecurity Analyst",
-      company: "Cisco",
-      batch: "2016",
-      image: "https://randomuser.me/api/portraits/men/50.jpg",
-      linkedin: "https://linkedin.com/in/devpatel",
-    },
-    {
-      _id: 8,
-      name: "Ananya Desai",
-      role: "Frontend Developer",
-      company: "Spotify",
-      batch: "2020",
-      image: "https://randomuser.me/api/portraits/women/33.jpg",
-      linkedin: "https://linkedin.com/in/ananyadesai",
-    },
-    {
-      _id: 9,
-      name: "Rahul Nair",
-      role: "Full Stack Developer",
-      company: "Netflix",
-      batch: "2019",
-      image: "https://randomuser.me/api/portraits/men/85.jpg",
-      linkedin: "https://linkedin.com/in/rahulnair",
-    },
-  ];
+  const [alumniData, setAlumniData] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/alumni")
+      .then((res) => setAlumniData(res.data))
+      .catch((err) => console.error("Error fetching alumni data:", err));
+  }, []);
+
+  useEffect(() => {
+    async function fetchLinkedInImages() {
+      const updated = await Promise.all(
+        alumniData.map(async (alumni) => {
+          try {
+            if (alumni.linkedin) {
+              const response = await axios.get(`https://api.microlink.io?url=${alumni.linkedin}`);
+              const linkedInImg = response.data?.data?.image?.url;
+              if (linkedInImg) {
+                return { ...alumni, image: linkedInImg };
+              }
+            }
+            return alumni;
+          } catch (error) {
+            console.warn("Could not fetch LinkedIn image for", alumni.name);
+            return alumni;
+          }
+        })
+      );
+      setAlumniData(updated);
+    }
+
+    if (alumniData.length > 0) fetchLinkedInImages();
+  }, [alumniData.length]);
+
+  // Filter by name
+  const filteredAlumni = alumniData.filter((a) =>
+    a.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <section
       id="alumni"
-      className="relative py-20 px-6 min-h-screen bg-cover bg-center"
+      className="relative py-20 px-6 min-h-screen bg-cover bg-center text-white"
       style={{ backgroundImage: `url(${bgImage})` }}
     >
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black/60"></div>
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
 
-      <div className="relative max-w-7xl mx-auto text-center text-white">
+      <div className="relative max-w-7xl mx-auto text-center z-10">
         <h2 className="text-5xl font-extrabold mb-6">
           Our <span className="text-teal-400">Alumni</span>
         </h2>
-        <p className="text-lg max-w-3xl mx-auto mb-14 text-gray-200">
-          Explore the journeys of our exceptional alumni who are now excelling
+        <p className="text-lg max-w-3xl mx-auto mb-10 text-gray-200">
+          Search and explore the journeys of our exceptional alumni who are now excelling
           in top tech companies around the world.
         </p>
 
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
-          {alumniData.map((alumni) => (
-            <div
-              key={alumni._id}
-              className="p-6 bg-white/90 backdrop-blur-lg rounded-2xl shadow-xl 
-                hover:shadow-2xl transition-all transform hover:-translate-y-2 text-center"
-            >
-              <img
-                src={alumni.image}
-                alt={alumni.name}
-                className="w-24 h-24 mx-auto rounded-full object-cover mb-4 border-4 border-teal-200"
-              />
-              <h3 className="text-xl font-bold text-teal-700">{alumni.name}</h3>
-              <p className="text-gray-600">{alumni.role}</p>
-              <p className="text-sm text-gray-500 mb-2">
-                {alumni.company} • Batch {alumni.batch}
-              </p>
-              <a
-                href={alumni.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block text-teal-600 hover:text-teal-800 font-medium mt-2"
-              >
-                🔗 LinkedIn
-              </a>
-            </div>
-          ))}
+        {/* 🔍 Search Bar */}
+        <div className="mb-12 flex justify-center">
+          <input
+            type="text"
+            placeholder="Search alumni by name..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full sm:w-1/2 px-5 py-3 rounded-xl bg-white/10 border border-teal-400/40 
+                       text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
+          />
         </div>
+
+        {/* Alumni Grid */}
+        {filteredAlumni.length === 0 ? (
+          <p className="text-gray-300">No alumni found.</p>
+        ) : (
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
+            {filteredAlumni.map((alumni) => (
+              <div
+                key={alumni._id}
+                onClick={() => navigate(`/alumni/${alumni._id}`)}
+                className="cursor-pointer p-6 bg-white/10 backdrop-blur-md rounded-2xl shadow-xl 
+                           hover:shadow-2xl transition-all transform hover:-translate-y-2 text-center"
+              >
+                <img
+                  src={alumni.image || "https://via.placeholder.com/100"}
+                  alt={alumni.name}
+                  className="w-28 h-28 mx-auto rounded-full object-cover mb-4 border-4 border-teal-200"
+                />
+                <h3 className="text-xl font-bold text-teal-400">{alumni.name}</h3>
+                <p className="text-gray-300">{alumni.role}</p>
+                <p className="text-sm text-gray-400 mb-2">
+                  {alumni.company} • Batch {alumni.batch}
+                </p>
+                {alumni.linkedin && (
+                  <a
+                    href={alumni.linkedin}
+                    onClick={(e) => e.stopPropagation()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block text-teal-300 hover:text-teal-500 font-medium mt-2"
+                  >
+                    🔗 LinkedIn
+                  </a>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

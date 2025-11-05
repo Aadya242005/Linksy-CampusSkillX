@@ -1,16 +1,14 @@
-# React + Vite
+# Linksy-CampusSkillX
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+CampusSkillX is a comprehensive, interactive web platform designed to empower students by helping them explore, develop, and showcase their skills in a structured and engaging way. Developed using React and Tailwind CSS, the platform features a visually striking hero page, smooth animations powered by Framer Motion, and intuitive navigation for seamless user experience. CampusSkillX highlights key functionalities such as hackathon showcases, step-by-step guidance on using the platform, skill development tracking, and future-ready sections for role-based features. Its fully responsive design ensures accessibility across desktop, tablet, and mobile devices, making learning, participating in hackathons, and building a skill portfolio both engaging and effortless. The project is ideal for students, educators, and tech enthusiasts seeking a modern, interactive solution for skill enhancement and career preparation.
 
-Currently, two official plugins are available:
+🌟 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is not enabled on this template. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Interactive Hero Page – Eye-catching main page with smooth animations and dynamic visuals.
+- Hackathon Showcase – Highlights ongoing and past hackathons with links and descriptions.
+- Skill Development Tracking – Allows users to monitor and showcase their skills (planned for future updates).
+- Responsive Design – Optimized for desktop, tablet, and mobile devices.
+- Smooth Navigation – Anchor links and scrolling animations for a seamless experience.
+- Role-Based Features – Sections that can adapt for students, educators, or mentors.
+- Modern UI/UX – Built with React, Tailwind CSS, and Framer Motion for a polished, interactive interface.
+- Future-Ready Expansion – Ready to integrate backend APIs, analytics dashboards, and hackathon participation modules.

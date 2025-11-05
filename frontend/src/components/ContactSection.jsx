@@ -1,20 +1,58 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import uploadImg from "../assets/upload5.svg";
 
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:5000/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      let data = {};
+      try {
+        data = await response.json();
+      } catch {
+        data = {};
+      }
+
+      if (response.ok && data.success) {
+        alert("✅ Message sent successfully!");
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        const msg = data.error || data.message || `HTTP ${response.status}`;
+        alert("❌ Error: " + msg);
+      }
+    } catch (err) {
+      alert("❌ Failed to send message: " + err.message);
+    }
+  };
+
   return (
     <section className="relative min-h-screen bg-gray-900 py-20 px-6 lg:px-20 text-white overflow-hidden">
-      {/* Background Image + Gradient Overlay */}
       <div
         className="absolute inset-0 bg-gray-900 bg-cover bg-center opacity-50"
         style={{ backgroundImage: `url(${uploadImg})` }}
-      ></div>
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm z-0"></div>
+      />
+      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm z-0" />
 
       <div className="relative z-10 max-w-6xl mx-auto flex flex-col lg:flex-row gap-12">
         {/* Contact Form */}
         <motion.form
+          onSubmit={handleSubmit}
           className="bg-gradient-to-br from-gray-800 via-gray-900 to-black border border-pink-500/30 
                      rounded-3xl p-10 shadow-[0_0_25px_rgba(236,72,153,0.4)] 
                      w-full lg:w-1/2 space-y-6"
@@ -31,15 +69,24 @@ const Contact = () => {
 
           <input
             type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
             placeholder="Your full name"
             className="w-full p-3 rounded-lg bg-black/30 border border-pink-400/40 text-white"
           />
           <input
             type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
             placeholder="you@example.com"
             className="w-full p-3 rounded-lg bg-black/30 border border-pink-400/40 text-white"
           />
           <textarea
+            name="message"
+            value={formData.message}
+            onChange={handleChange}
             rows="4"
             placeholder="Write your message..."
             className="w-full p-3 rounded-lg bg-black/30 border border-pink-400/40 text-white"
@@ -55,17 +102,14 @@ const Contact = () => {
           </button>
         </motion.form>
 
-        {/* Flip Card - Auto Rotating */}
+        {/* Decorative Card */}
         <motion.div className="w-full lg:w-1/2 h-[28rem] perspective">
           <motion.div
             className="relative w-full h-full rounded-3xl"
             animate={{ rotateY: [0, 180, 360] }}
             transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-            style={{
-              transformStyle: "preserve-3d",
-            }}
+            style={{ transformStyle: "preserve-3d" }}
           >
-            {/* Front Side */}
             <div
               className="absolute inset-0 flex flex-col justify-center items-center 
                          bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl 
@@ -79,7 +123,6 @@ const Contact = () => {
               </p>
             </div>
 
-            {/* Back Side */}
             <div
               className="absolute inset-0 flex flex-col justify-center items-center 
                          bg-gradient-to-br from-teal-700 to-purple-800 rounded-3xl p-8 text-center"
@@ -90,14 +133,6 @@ const Contact = () => {
                 <p>📧 <strong>Email:</strong> support@skillx.in</p>
                 <p>📞 <strong>Phone:</strong> +91 8755093039</p>
                 <p>📍 <strong>Address:</strong> GLA University, India</p>
-              </div>
-              <div className="mt-6">
-                <h3 className="font-semibold text-gray-200">Follow Us</h3>
-                <div className="flex space-x-5 mt-3 justify-center">
-                  <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="text-pink-300 hover:text-pink-500">LinkedIn</a>
-                  <a href="https://github.com" target="_blank" rel="noreferrer" className="text-white hover:text-gray-200">GitHub</a>
-                  <a href="https://twitter.com" target="_blank" rel="noreferrer" className="text-blue-300 hover:text-blue-500">Twitter</a>
-                </div>
               </div>
             </div>
           </motion.div>

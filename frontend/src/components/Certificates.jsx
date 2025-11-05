@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import bgImage from "../assets/upload5.svg"; // Your light, shadowy background image
+import bgImage from "../assets/upload5.svg"; // Subtle tech pattern background
 
 const certificates = [
   {
@@ -64,22 +64,25 @@ const card = {
 const Certificates = () => {
   return (
     <section
-      className="relative py-24 px-6 bg-white text-gray-900"
+      className="relative py-24 px-6 text-gray-100 bg-[#0F172A]"
       style={{
         backgroundImage: `url(${bgImage})`,
         backgroundRepeat: "no-repeat",
-        backgroundSize: "contain",
+        backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
-      {/* Light white overlay to soften background image */}
-      <div className="absolute inset-0 bg-white/80 pointer-events-none"></div>
+      {/* Subtle dark gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0F172A]/90 via-[#1E293B]/90 to-[#0F172A]/95 pointer-events-none"></div>
 
-      <div className="relative z-10 max-w-7xl mx-auto">
-        <h2 className="text-4xl font-bold mb-6">📜 Valuable Certifications</h2>
-        <p className="text-lg mb-12 text-gray-700 max-w-3xl mx-auto">
-          Companies highly value these certifications in Cloud, AI, Cybersecurity,
-          and Project Management. Earning them boosts your employability and career growth.
+      <div className="relative z-10 max-w-7xl mx-auto text-center">
+        <h2 className="text-4xl font-bold mb-6 text-[#3B82F6]">
+          📜 Valuable Certifications
+        </h2>
+        <p className="text-lg mb-12 text-gray-300 max-w-3xl mx-auto">
+          Boost your career with globally recognized certifications in Cloud, AI,
+          Cybersecurity, and Project Management. These validate your expertise and
+          open doors to high-impact roles.
         </p>
 
         <motion.div
@@ -93,18 +96,21 @@ const Certificates = () => {
             <motion.div
               key={idx}
               variants={card}
-              whileHover={{ scale: 1.04, transition: { duration: 0.3 } }}
-              className="bg-white border border-gray-200 rounded-xl shadow-md p-6 hover:shadow-lg transition-all duration-300 text-left"
+              whileHover={{
+                scale: 1.05,
+                boxShadow: "0 0 25px rgba(34, 211, 238, 0.4)",
+              }}
+              className="bg-[#1E293B]/80 border border-[#3B82F6]/30 rounded-xl shadow-md p-6 text-left transition-all duration-300 backdrop-blur-sm"
             >
-              <h3 className="text-lg font-semibold text-indigo-600 mb-2">
+              <h3 className="text-lg font-semibold text-[#22D3EE] mb-2">
                 {cert.name}
               </h3>
-              <p className="text-sm text-gray-600 mb-4">{cert.description}</p>
+              <p className="text-sm text-gray-400 mb-6">{cert.description}</p>
               <a
                 href={cert.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block text-sm font-medium text-white bg-indigo-500 hover:bg-indigo-400 px-4 py-2 rounded-lg transition"
+                className="inline-block text-sm font-medium text-white bg-[#3B82F6] hover:bg-[#22D3EE] px-4 py-2 rounded-lg transition-all duration-300"
               >
                 Learn More →
               </a>
