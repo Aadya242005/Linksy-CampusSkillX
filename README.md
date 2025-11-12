@@ -43,6 +43,9 @@ Built with **React + Tailwind CSS + Framer Motion**, it’s designed for **stude
 | ☁️ (Planned) | **Supabase / Firebase** | Backend, database, and authentication |
 | 📊 (Planned) | **Recharts / Chart.js** | Skill analytics and insights dashboard |
 
+
+Live LInk for deployed Frontend :
+https://linksy-campus-skill-x-vosb.vercel.app/
 ---
 
 ## ⚙️ Folder Structure
